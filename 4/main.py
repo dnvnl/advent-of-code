@@ -1,20 +1,21 @@
 #!/usr/bin/python3
 
+import re
+
 with open('4/input.txt', 'r') as f:
     l = f.readlines()
 
+r = re.compile(r'^Card\s+\d+:\s+([\d\s+]+)\s\|\s+([\d\s+]+)$')
 s1, s2 = 0, 0
 o=[0]
 
 for j, i in enumerate(l):
-    if i=='':
-        break
     if len(o) < j+2:
         o.append(1)
-    s = 0
-    c=0
-    w = i.split(":")[1].split('|')[0].split()
-    h = i.split(":")[1].split('|')[1].split()
+    s, c = 0, 0
+    m = r.match(i)
+    w = m.groups()[0].split()
+    h = m.groups()[1].split()
     for n in h:
         if n in w:
             c+=1
